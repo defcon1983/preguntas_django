@@ -1,0 +1,38 @@
+{% extends 'base/base.html' %}
+
+
+{% block contenido %}
+  <div class="container">
+        
+<h1>detalles de las preguntas</h1>
+<h4 class="blue-text">{{ object }}</h4>
+<br>
+<table>
+    <thead>
+      <tr>
+          <th>respuesta</th>
+          <th>votos</th>
+      </tr>
+    </thead>
+
+    <tbody>
+        {% for i in preguntas.preguntas_respuestas.all %}
+      <tr>
+        <td>{{i}}</td>
+        <td>{{ i.votos }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+<!--
+    preguntas.preguntas_respuestas.all
+    preguntas = el modelo
+    preguntas_respuestas = nombre relativo de la foreingkey o related_name
+ -->
+
+
+
+  </div>
+{% endblock contenido %}
+    

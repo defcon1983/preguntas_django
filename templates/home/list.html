@@ -1,0 +1,37 @@
+{% extends 'base/base.html' %}
+
+   
+   {% block contenido %}
+
+   
+<div class="container">
+  <h1 class='center'>Listado de preguntas</h1>
+
+  <table>
+    <thead>
+      <tr>
+          <th>preguntas</th>
+          <th>votar</th>
+          <th>editar</th>
+          <th>borrar</th>
+      </tr>
+    </thead>
+  
+{% for datos in object_list %}  
+    <tbody>
+      <tr>
+        <td><a class='black-text' href="{% url 'home:preguntas_detail' datos.id %}">{{ datos }}</a></td>
+        <td><a class='blue-text' href="{% url 'home:votos' datos.id %}">votar</a></td>
+        <td><a class='green-text' href="{% url 'home:preguntas_up' datos.id %}">actualizar</a></td>
+        <td><a class='red-text' href="{% url 'home:preguntas_del' datos.id %}">borrar</a></td>
+      </tr>
+    </tbody>
+{% endfor %}
+    
+  </table>
+</div>
+
+<!-- ventanas modals-->
+
+   {% endblock contenido %}
+       

@@ -1,0 +1,20 @@
+{% extends 'base/base.html' %}
+
+
+{% block contenido %}
+
+
+{% for data in data_preguntas %}
+    <p> <a href="{% url 'home:preguntas_detail' data.id %}">{{ data }}</a>  -- {{ data.name }} -- {{ data.edad }}</p>
+
+{% endfor %}
+
+
+{% for datos in data_preguntas.preguntas_respuestas.all %}
+    {{ datos }}
+{% endfor %}
+    
+   
+
+{% endblock contenido %}
+    

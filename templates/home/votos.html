@@ -1,0 +1,25 @@
+
+
+{% block contenido %}
+<h1>votaciones</h1>
+<br>
+
+<form method="POST">
+    {% csrf_token %}
+    <p>{{pregunta}}</p>
+    {% for i in res %}
+    <input type="radio" name="votar" id="choice{{ forloop.counter }}" value="{{ i.id }}" />
+    <label for="choice{{ forloop.counter }}">{{ i }}</label><br />
+    {% endfor %}
+    
+    <input type="submit" value="Vote">
+    <p></p>
+    <a href="{% url 'home:preguntas_list' %}">home</a>
+</form>
+<!--
+    preguntas.preguntas_respuestas.all
+    preguntas = el modelo
+    preguntas_respuestas = nombre relativo de la foreingkey o related_name
+ -->
+{% endblock contenido %}
+    
