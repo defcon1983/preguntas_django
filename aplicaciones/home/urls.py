@@ -10,6 +10,8 @@ from .views import (
     PreguntasDetailView,
     listar,
     votos,
+    Votos,
+    Edit_respuestas,
     )
 
 app_name = 'home'
@@ -23,8 +25,9 @@ urlpatterns = [
     path('up/<pk>', PreguntaUpdate.as_view(), name='preguntas_up'),
     path('del/<pk>', PreguntaDeleteView.as_view(), name='preguntas_del'),
     path('detail/<pk>', PreguntasDetailView.as_view(), name='preguntas_detail'),
+
+    path('edit/<pk>', Edit_respuestas.as_view(), name='edit'),
     #los votos
-    path('votos/<votos_id>', votos, name='votos'),
+    # path('votos/<votos_id>', votos, name='votos'),
+    path('votos/<votos_id>', Votos.as_view(), name='votos'),
 ]
-
-

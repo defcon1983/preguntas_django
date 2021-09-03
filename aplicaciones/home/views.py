@@ -1,7 +1,9 @@
+from django.db.models.query import prefetch_related_objects
 from django.urls import reverse_lazy
 
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic.detail import DetailView
+from django.views import View
 
 from django.views.generic.edit import (
    CreateView,
@@ -50,19 +52,20 @@ class PreguntasView(ListView):
 class PreguntasCreate(CreateView):
     model = Preguntas
     # template_name = 'home/crear.html'
-    fields = [
-       'pregunta'
-       ]
+    fields = ('__all__')
     success_url = '/'
     # fields = '__all__'  * la sintaxis  __all__ se usa para
 
 # esta es la clase de la vista para actualizar preguntas
 class PreguntaUpdate(UpdateView):
-    model = Preguntas # campo que hace referencia al modelo utilizado
-    fields = ['pregunta']  # listar atributos de la tabla principal
-    template_name_suffix = '_update_form'
-    success_url = '/'
+   model = Preguntas # campo que hace referencia al modelo utilizado
+   # data = Preguntas.objects.preguntas_update()
+   # queryset = data
+   fields = ('__all__')  # listar atributos de la tabla principal
+   template_name_suffix = '_update_form'
+   success_url = '/'
 
+   
 # logica del borrado de un objeto (pregunta)
 class PreguntaDeleteView(DeleteView):
    model = Preguntas
@@ -71,7 +74,7 @@ class PreguntaDeleteView(DeleteView):
 # logica del detalle de un objeto o una pregunta
 class PreguntasDetailView(DetailView):
    model = Preguntas
-   
+
 
 """
 Esta vista basada en funcion fue usada para la parte
@@ -95,3 +98,27 @@ def votos(request, votos_id):
       votos.votos += 1
       votos.save()
       return HttpResponseRedirect(reverse_lazy('home:preguntas_detail', args=(pregunta.id,)))
+
+class Votos(View):
+   
+   def get(self, request, votos_id, **kwargs):
+      pregunta = get_object_or_404(Preguntas, pk=votos_id)
+      print(pregunta)
+      res = Respuesta.objects.respuestas_en_preguntas(pregunta.id)
+      context={
+         'pregunta': pregunta,
+         'res': res
+      }
+      return render(request, 'home/votos.html', context)
+
+   def post(self, request, votos_id, **kwargs):
+      pregunta = get_object_or_404(Preguntas, pk=votos_id)
+      votos = Respuesta.objects.get(pk=request.POST['votar'])
+      votos.votos += 1
+      votos.save()
+
+class Edit_respuestas(UpdateView):
+   model = Respuesta # campo que hace referencia al modelo utilizado
+   fields = ['respuesta']  # listar atributos de la tabla principal
+   template_name_suffix = '_update_form'
+   success_url = '/'

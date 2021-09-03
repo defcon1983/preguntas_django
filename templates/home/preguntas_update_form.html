@@ -8,5 +8,21 @@
     {{ form.as_p }}
     <input type="submit" value="Update">
 </form>
+<h3>
+    actualizar respuestas
+</h3>
+
+
+{% for respuesta in preguntas.preguntas_respuestas.all %}
+
+<p>
+    <a href="{% url 'home:edit' respuesta.id %}  ">{{ respuesta }}</a>
+</p>
+    
+{% endfor %}
+    
+
+
 {% endblock contenido %}
+
     

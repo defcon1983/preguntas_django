@@ -11,6 +11,17 @@ boton o en este caso un vinculo
 
 from django.db import models
 
+class PreguntasManager(models.Manager):
+
+    def preguntas_update(self, preguntas):
+
+        return self.filter(
+            preg__id=preguntas
+        )
+    """
+    en el return enviamos la lista de respuestas obtenidas
+    """
+
 class RespuestasManager(models.Manager):
     """ filtrmos pormedio del ID que nos llega de la peticion
     la lista de respuestas contenidas en una pregunta por medio
@@ -21,7 +32,3 @@ class RespuestasManager(models.Manager):
         return self.filter(
             preg__id=preguntas
         )
-    
-    """
-    en el return enviamos la lista de respuestas obtenidas
-    """
